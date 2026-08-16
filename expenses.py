@@ -15,6 +15,70 @@ try:
 
 except FileNotFoundError:
     print("No saved expenses found.")
+def add_expense():
+    expense = input("Enter expense name: ")
+    amount = input("Enter expense amount: ")
+
+    file = open("expenses.txt", "a")
+    expenses.append(expense + " - ₹" + amount)
+    file.write(expense + " - ₹" + amount+"\n")
+    file.close()
+
+    print(expenses)
+    print("Expense added successfully!")
+
+
+def view_expenses():
+    print("\nYour Expenses:")
+    total = 0
+
+    for i, expense in enumerate(expenses, start=1):
+        print(i, ".", expense)
+        total = total + int(expense.split("₹")[1])
+
+    print("Total Expenses:", total)
+
+def delete_expense():
+    print("\nYour Expenses:")
+
+    for i, expense in enumerate(expenses, start=1):
+        print(i, ".", expense)
+
+    delete = int(input("Enter expense number to delete: "))
+
+    expenses.pop(delete - 1)
+
+    file = open("expenses.txt", "w")
+
+    for expense in expenses:
+        file.write(expense + "\n")
+
+    file.close()
+
+    print("Expense deleted successfully!")
+
+
+def edit_expense():
+    print("\nYour Expenses:")
+
+    for i, expense in enumerate(expenses, start=1):
+        print(i, ".", expense)
+
+    edit = int(input("Enter expense number to edit: "))
+
+    new_expense = input("Enter new expense name: ")
+    new_amount = input("Enter new expense amount: ")
+
+    expenses[edit - 1] = new_expense + " - ₹" + new_amount
+
+    file = open("expenses.txt", "w")
+
+    for expense in expenses:
+        file.write(expense + "\n")
+
+    file.close()
+
+    print("Expense updated successfully!")
 while True:
     print("\n===== Expense Tracker =====")
     print("1. Add Expense")
@@ -25,22 +89,10 @@ while True:
     choice = input("Enter your choice: ")
 
     if choice == "1":
-        expense = input("Enter expense name: ")
-        amount = input("Enter expense amount: ")
-        file = open("expense.txt","a")
-        expenses.append(expense + " - ₹" + amount)
-        file.write(expense +"- ₹" + amount)
-        file.close()
-        print(expenses)
-        print("Expense added successfully!")
+        add_expense()
 
     elif choice == "2":
-        print("\nYour Expenses:")
-        total=0
-        for i,expense in enumerate(expenses,start=1):
-            print(i,".",expense)
-            total = total + int(expense.split("₹")[1])
-        print("Total Expenses: ₹", total)
+        view_expenses()
     elif choice == "3":
          print("\nyour Expenses:")
          for i, expense in enumerate(expenses,start=1):
